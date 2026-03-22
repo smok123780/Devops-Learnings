@@ -18,7 +18,8 @@ resource "google_compute_instance_template" "frontend" {
   }
 
   metadata = {
-    BACKEND_UPSTREAM = var.backend_ilb_ip
+    # ILB and Tomcat listen on 8080; nginx upstream must include the port
+    BACKEND_UPSTREAM = "${var.backend_ilb_ip}:8080"
   }
 
   metadata_startup_script = file("${path.root}/${var.startup_script_path}")
@@ -41,7 +42,7 @@ resource "google_compute_health_check" "frontend_http" {
 
   http_health_check {
     port         = 80
-    request_path = "/"
+    request_path = "/health"
   }
 }
 
