@@ -71,3 +71,22 @@ module "artifact_registry" {
 
   depends_on = [module.project_services]
 }
+
+module "backend_tier" {
+  source = "./modules/backend_tier"
+
+  project_id          = var.project_id
+  region              = var.region
+  zone                = var.zone
+  environment         = var.environment
+  network_name        = module.networking.primary_vpc_name
+  private_subnet_name = module.networking.private_subnet_name
+  app_sa_email        = module.iam.app_sa_email
+  backend_ilb_ip      = var.backend_ilb_ip
+  instance_type       = var.instance_type
+  mig_min_size        = var.backend_mig_min_size
+  mig_max_size        = var.backend_mig_max_size
+  startup_script_path = var.backend_startup_script_path
+
+  depends_on = [module.networking, module.iam]
+}
