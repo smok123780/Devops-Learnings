@@ -48,3 +48,26 @@ module "cloud_sql" {
 
   depends_on = [module.project_services, module.networking]
 }
+
+module "storage" {
+  source = "./modules/storage"
+
+  project_id             = var.project_id
+  region                 = var.region
+  environment            = var.environment
+  sql_import_bucket_name = var.sql_import_bucket
+  sql_instance_sa_email  = module.cloud_sql.service_account_email
+  sql_init_file_path     = var.sql_init_file_path
+
+  depends_on = [module.cloud_sql]
+}
+
+module "artifact_registry" {
+  source = "./modules/artifact_registry"
+
+  project_id    = var.project_id
+  region        = var.region
+  repository_id = var.artifact_repository_id
+
+  depends_on = [module.project_services]
+}
