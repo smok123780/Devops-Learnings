@@ -109,3 +109,11 @@ module "frontend_tier" {
 
   depends_on = [module.networking, module.backend_tier]
 }
+
+module "monitoring" {
+  source = "./modules/monitoring"
+
+  project_id  = var.project_id
+  environment = var.environment
+  ops_email   = var.ops_email
+}
