@@ -26,4 +26,11 @@ module "networking" {
   project_id  = var.project_id
   region      = var.region
   environment = var.environment
+  depends_on  = [module.project_services]
+}
+
+module "iam" {
+  source     = "./modules/iam"
+  project_id = var.project_id
+  depends_on = [module.project_services]
 }

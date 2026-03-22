@@ -16,5 +16,5 @@ resource "google_project_service" "enabled" {
   project  = var.project_id
   service  = each.value
 
-  disable_on_destroy = true
+  disable_on_destroy = false
 }
