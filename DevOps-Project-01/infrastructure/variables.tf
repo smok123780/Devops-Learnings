@@ -63,6 +63,24 @@ variable "artifact_repository_id" {
   default     = "maven-releases"
 }
 
+variable "app_maven_group_id" {
+  description = "Maven groupId for the WAR deployed to backend Tomcat (metadata for startup script)"
+  type        = string
+  default     = "com.devopsrealtime"
+}
+
+variable "app_maven_artifact_id" {
+  description = "Maven artifactId for the WAR deployed to backend Tomcat"
+  type        = string
+  default     = "dptweb"
+}
+
+variable "app_maven_version" {
+  description = "Maven version of the WAR to pull from Artifact Registry"
+  type        = string
+  default     = "1.0"
+}
+
 variable "ops_email" {
   description = "Email address for monitoring notifications"
   type        = string

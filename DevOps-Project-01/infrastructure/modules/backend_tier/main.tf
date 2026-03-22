@@ -5,7 +5,7 @@ data "google_compute_subnetwork" "private" {
 }
 
 resource "google_compute_instance_template" "backend" {
-  name_prefix  = "${var.environment}-backend-"
+  name_prefix  = "${var.environment}-backend-template"
   machine_type = var.instance_type
   region       = var.region
   project      = var.project_id
