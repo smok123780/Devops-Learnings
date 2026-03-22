@@ -90,3 +90,22 @@ module "backend_tier" {
 
   depends_on = [module.networking, module.iam]
 }
+
+module "frontend_tier" {
+  source = "./modules/frontend_tier"
+
+  project_id             = var.project_id
+  region                 = var.region
+  zone                   = var.zone
+  environment            = var.environment
+  network_name           = module.networking.primary_vpc_name
+  public_subnet_name     = module.networking.public_subnet_name
+  backend_ilb_ip         = module.backend_tier.ilb_ip
+  instance_type          = var.instance_type
+  mig_min_size           = var.frontend_mig_min_size
+  mig_max_size           = var.frontend_mig_max_size
+  target_cpu_utilization = var.frontend_target_cpu_utilization
+  startup_script_path    = var.frontend_startup_script_path
+
+  depends_on = [module.networking, module.backend_tier]
+}
