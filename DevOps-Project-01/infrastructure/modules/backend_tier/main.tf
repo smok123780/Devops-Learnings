@@ -5,7 +5,7 @@ data "google_compute_subnetwork" "private" {
 }
 
 resource "google_compute_instance_template" "backend" {
-  name         = "${var.environment}-backend-template"
+  name_prefix  = "${var.environment}-backend-"
   machine_type = var.instance_type
   region       = var.region
   project      = var.project_id
@@ -15,6 +15,15 @@ resource "google_compute_instance_template" "backend" {
     source_image = "debian-cloud/debian-12"
     auto_delete  = true
     boot         = true
+  }
+
+  metadata = {
+    AR_PROJECT_ID         = var.ar_project_id
+    AR_LOCATION           = var.ar_location
+    AR_REPOSITORY         = var.ar_repository
+    APP_MAVEN_GROUP_ID    = var.app_maven_group_id
+    APP_MAVEN_ARTIFACT_ID = var.app_maven_artifact_id
+    APP_MAVEN_VERSION     = var.app_maven_version
   }
 
   metadata_startup_script = file("${path.root}/${var.startup_script_path}")

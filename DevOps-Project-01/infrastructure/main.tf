@@ -68,27 +68,34 @@ module "artifact_registry" {
   project_id    = var.project_id
   region        = var.region
   repository_id = var.artifact_repository_id
+  app_sa_email  = module.iam.app_sa_email
 
-  depends_on = [module.project_services]
+  depends_on = [module.project_services, module.iam]
 }
 
 module "backend_tier" {
   source = "./modules/backend_tier"
 
-  project_id          = var.project_id
-  region              = var.region
-  zone                = var.zone
-  environment         = var.environment
-  network_name        = module.networking.primary_vpc_name
-  private_subnet_name = module.networking.private_subnet_name
-  app_sa_email        = module.iam.app_sa_email
-  backend_ilb_ip      = var.backend_ilb_ip
-  instance_type       = var.instance_type
-  mig_min_size        = var.backend_mig_min_size
-  mig_max_size        = var.backend_mig_max_size
-  startup_script_path = var.backend_startup_script_path
+  project_id            = var.project_id
+  region                = var.region
+  zone                  = var.zone
+  environment           = var.environment
+  network_name          = module.networking.primary_vpc_name
+  private_subnet_name   = module.networking.private_subnet_name
+  app_sa_email          = module.iam.app_sa_email
+  backend_ilb_ip        = var.backend_ilb_ip
+  instance_type         = var.instance_type
+  mig_min_size          = var.backend_mig_min_size
+  mig_max_size          = var.backend_mig_max_size
+  startup_script_path   = var.backend_startup_script_path
+  ar_project_id         = var.project_id
+  ar_location           = var.region
+  ar_repository         = var.artifact_repository_id
+  app_maven_group_id    = var.app_maven_group_id
+  app_maven_artifact_id = var.app_maven_artifact_id
+  app_maven_version     = var.app_maven_version
 
-  depends_on = [module.networking, module.iam]
+  depends_on = [module.networking, module.iam, module.artifact_registry]
 }
 
 module "frontend_tier" {

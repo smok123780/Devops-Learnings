@@ -60,3 +60,33 @@ variable "startup_script_path" {
   description = "Path to startup script"
   type        = string
 }
+
+variable "ar_project_id" {
+  description = "GCP project ID for Artifact Registry (Maven repo host)"
+  type        = string
+}
+
+variable "ar_location" {
+  description = "Artifact Registry location (region)"
+  type        = string
+}
+
+variable "ar_repository" {
+  description = "Artifact Registry Maven repository ID"
+  type        = string
+}
+
+variable "app_maven_group_id" {
+  description = "Maven groupId for the WAR"
+  type        = string
+}
+
+variable "app_maven_artifact_id" {
+  description = "Maven artifactId for the WAR"
+  type        = string
+}
+
+variable "app_maven_version" {
+  description = "Maven version for the WAR"
+  type        = string
+}

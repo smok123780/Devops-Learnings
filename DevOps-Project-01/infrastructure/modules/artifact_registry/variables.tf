@@ -13,3 +13,8 @@ variable "repository_id" {
   type        = string
   default     = "maven-releases"
 }
+
+variable "app_sa_email" {
+  description = "Application VM service account email (Artifact Registry reader)"
+  type        = string
+}
